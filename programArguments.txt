@@ -1,5 +1,0 @@
-Test 1
-l C:\Users\norwa\OneDrive\Documents\GitHub\CGrepActors\Test.txt C:\Users\norwa\OneDrive\Documents\GitHub\CGrepActors\Test2.txt
-
-Test 2
-a C:\Users\norwa\OneDrive\Documents\GitHub\CGrepActors\Test.txt C:\Users\norwa\OneDrive\Documents\GitHub\CGrepActors\Test2.txt
