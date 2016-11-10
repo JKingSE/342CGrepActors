@@ -1,3 +1,7 @@
+package com.CGrepActors;
+
+import com.CGrepActors.ListOfFound;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.FileNotFoundException;
