@@ -1,6 +1,6 @@
 package com.CGrepActors;
 
-public class CollectionActor{
+public class CollectionActor extends Thread{
     private FileCount fileCount;
     boolean hasFileCount = false;
 
@@ -25,5 +25,10 @@ public class CollectionActor{
          * When all the Found messages have been processed, the CollectionActor
          * shuts down all actors using Actors.registry().shutdown()
          */
+    }
+
+    @Override
+    public void run(){
+
     }
 }

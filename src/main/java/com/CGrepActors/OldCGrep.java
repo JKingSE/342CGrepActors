@@ -26,17 +26,6 @@ public class OldCGrep {
     private static  ExecutorService executor;
 
     public static void main(String[] args) {
-        ActorRef ref = new ActorRef() {
-            @Override
-            public boolean isTerminated() {
-                return false;
-            }
-
-            @Override
-            public ActorPath path() {
-                return null;
-            }
-        };
 
         int argLength = args.length;
 
