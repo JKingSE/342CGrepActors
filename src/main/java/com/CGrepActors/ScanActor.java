@@ -1,6 +1,7 @@
 package com.CGrepActors;
 
 import akka.actor.ActorRef;
+import akka.actor.UntypedActor;
 
 /***
  * Each file (or the standard input if no files are given) will be scanned by a ScanActor
@@ -10,7 +11,7 @@ import akka.actor.ActorRef;
  * which collects and prints scan results
  *
  */
-public class ScanActor extends Thread{
+public class ScanActor extends UntypedActor implements Runnable{
     private final Configure message;
     private final ActorRef ref;
 
@@ -22,5 +23,10 @@ public class ScanActor extends Thread{
     @Override
     public void run() {
         //TODO: scan the file for matches and create Found objects
+    }
+
+    @Override
+    public void onReceive(Object o) throws Throwable {
+
     }
 }

@@ -1,6 +1,8 @@
 package com.CGrepActors;
 
-public class CollectionActor extends Thread{
+import akka.actor.UntypedActor;
+
+public class CollectionActor extends UntypedActor implements Runnable{
     private FileCount fileCount;
     boolean hasFileCount = false;
 
@@ -12,6 +14,11 @@ public class CollectionActor extends Thread{
             this.fileCount = fileCount;
             hasFileCount = true;
         }
+    }
+
+    @Override
+    public void onReceive(Object o) throws Throwable {
+
     }
 
     /***
