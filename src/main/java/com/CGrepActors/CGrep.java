@@ -1,5 +1,9 @@
 package com.CGrepActors;
 
+import akka.actor.ActorPath;
+import akka.actor.ActorRef;
+import akka.actor.UntypedActor;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,6 +26,18 @@ public class CGrep {
     private static  ExecutorService executor;
 
     public static void main(String[] args) {
+        ActorRef ref = new ActorRef() {
+            @Override
+            public boolean isTerminated() {
+                return false;
+            }
+
+            @Override
+            public ActorPath path() {
+                return null;
+            }
+        };
+
         int argLength = args.length;
 
         if(argLength == 0){
