@@ -2,7 +2,7 @@ package com.CGrepActors;
 
 import akka.actor.UntypedActor;
 
-public class CollectionActor extends UntypedActor implements Runnable{
+public class CollectionActor extends UntypedActor{
     private FileCount fileCount;
     boolean hasFileCount = false;
 
@@ -32,10 +32,5 @@ public class CollectionActor extends UntypedActor implements Runnable{
          * When all the Found messages have been processed, the CollectionActor
          * shuts down all actors using Actors.registry().shutdown()
          */
-    }
-
-    @Override
-    public void run(){
-
     }
 }

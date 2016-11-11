@@ -11,18 +11,13 @@ import akka.actor.UntypedActor;
  * which collects and prints scan results
  *
  */
-public class ScanActor extends UntypedActor implements Runnable{
+public class ScanActor extends UntypedActor{
     private final Configure message;
     private final ActorRef ref;
 
     public ScanActor(Configure message, ActorRef ref){
         this.message = message;
         this.ref = ref;
-    }
-
-    @Override
-    public void run() {
-        //TODO: scan the file for matches and create Found objects
     }
 
     @Override
