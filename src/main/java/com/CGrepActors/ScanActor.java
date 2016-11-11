@@ -2,7 +2,7 @@ package com.CGrepActors;
 
 import akka.actor.ActorRef;
 
-/***
+/**
  * Each file (or the standard input if no files are given) will be scanned by a ScanActor
  * for occurrences of the pattern, using one actor per file. A ScanActor expects to receive
  * exactly one immutable Configure message containing (a) a String with the name of the
