@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Found {
 
-    // Name of the file //
+    // Name of the file
     private final String filename;
 
 
