@@ -2,12 +2,9 @@ package com.CGrepActors;
 
 import java.util.List;
 
-/**
- * Created by nate on 11/10/16.
- */
 public class Found {
 
-    // Name of the file
+    // Name of the file  //
     private final String filename;
 
 

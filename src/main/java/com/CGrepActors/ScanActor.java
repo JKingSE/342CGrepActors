@@ -8,6 +8,7 @@ import akka.actor.ActorRef;
  * exactly one immutable Configure message containing (a) a String with the name of the
  * file to scan (or null for the standard input), and (b) an ActorRef to a CollectionActor,
  * which collects and prints scan results
+ *
  */
 public class ScanActor extends Thread{
     private final Configure message;

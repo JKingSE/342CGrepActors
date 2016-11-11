@@ -1,10 +1,5 @@
 package com.CGrepActors;
 
-import akka.actor.Actor;
-
-/**
- * Created by nate on 11/10/16.
- */
 public class CollectionActor{
     private FileCount fileCount;
     boolean hasFileCount = false;
