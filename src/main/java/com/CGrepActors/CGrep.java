@@ -1,24 +1,20 @@
 package com.CGrepActors;
 
 import akka.actor.ActorRef;
-
+import akka.actor.*;
 import java.io.File;
 import java.util.Scanner;
 import java.util.concurrent.*;
+import java.util.*;
+import static akka.actor.ActorSystem.*;
 
 /**
  * Created by John King on 11-Nov-16.
  */
 public class CGrep {
 
-    // Thread Pool Size
-    private static final int THREAD_POOL_MAX = 3;
-    private static ExecutorService executor;
-
 
     public static void main(String args[]){
-        int numOfFiles = 3;
-        ActorRef[] ref = new ActorRef[2];
 
 
         int argLength = args.length;
@@ -28,23 +24,31 @@ public class CGrep {
             System.exit(1);
         }
 
-        executor = Executors.newFixedThreadPool(THREAD_POOL_MAX);
 
         String pattern = args[0];
 
+        FileCount fileCount;
 
         if (argLength > 1) { // case where all arguments are passed through program args
-            countFiles(args,false);
+            fileCount = new FileCount(  countFiles(args,false)  );
 
-        } else if (argLength == 1) { // case where the user supplies their own filepath's via keyboard
+        } else{ // case where the user supplies their own filepath's via keyboard
             System.out.print("Please enter filepath(s) separated by spaces: ");
             Scanner sc = new Scanner(System.in);
             String input = sc.nextLine();
             String[] parsed = input.split(" "); // split on all spaces
-            countFiles(parsed,true);
+            fileCount = new FileCount(  countFiles(parsed,true) );
         }
 
-        executor.shutdown();
+        ActorRef[] scanActorRef = new ActorRef[  fileCount.getFileCount() ];
+        ActorRef[] collectionRef = new ActorRef[1];
+
+        ActorSystem system = ActorSystem.create();
+
+        collectionRef[0] = system.actorOf(  Props.create(   CollectionActor.class   )   );
+
+
+
     }
 
     /**
