@@ -1,7 +1,6 @@
 package com.CGrepActors;
 
 import akka.actor.ActorRef;
-import akka.actor.Props;
 import static akka.actor.Actors.*;
 
 import java.io.File;

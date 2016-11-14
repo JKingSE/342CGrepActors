@@ -21,16 +21,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>ch.inventsoft.akka</groupId>
-            <artifactId>rxtx-akka-io_2.11</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-actor_2.11</artifactId>
-            <version>2.4-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <repositories>
