@@ -1,18 +1,19 @@
 package com.CGrepActors;
 
 import akka.actor.ActorRef;
-import akka.actor.*;
+import akka.actor.Props;
+import static akka.actor.Actors.*;
+
 import java.io.File;
 import java.util.Scanner;
-import java.util.concurrent.*;
-import java.util.*;
-import static akka.actor.ActorSystem.*;
 
 /**
  * Created by John King on 11-Nov-16.
  */
 public class CGrep {
 
+    static private ActorRef [] scanActorRef;
+    static private ActorRef collectionActorRef;
 
     public static void main(String args[]){
 
@@ -29,8 +30,12 @@ public class CGrep {
 
         FileCount fileCount;
 
+        int count = countFiles(args, false);
+
+        scanActorRef = new ActorRef[count];
+
         if (argLength > 1) { // case where all arguments are passed through program args
-            fileCount = new FileCount(  countFiles(args,false)  );
+            fileCount = new FileCount(  count  );
 
         } else{ // case where the user supplies their own filepath's via keyboard
             System.out.print("Please enter filepath(s) separated by spaces: ");
@@ -40,15 +45,23 @@ public class CGrep {
             fileCount = new FileCount(  countFiles(parsed,true) );
         }
 
-        ActorRef[] scanActorRef = new ActorRef[  fileCount.getFileCount() ];
-        ActorRef[] collectionRef = new ActorRef[1];
+        collectionActorRef = actorOf(CollectionActor.class);
+        for(int x=0; x<count; x++){
+            scanActorRef[x] = actorOf(ScanActor.class);
+        }
+        collectionActorRef.start();
+        for(int x=0;x<count;x++){
+            scanActorRef[x].start();
+        }
 
-        ActorSystem system = ActorSystem.create();
+        /*
+        Do Stuff
+         */
 
-        collectionRef[0] = system.actorOf(  Props.create(   CollectionActor.class   )   );
-
-
-
+        collectionActorRef.stop();
+        for(int x=0;x<count;x++){
+            scanActorRef[x].stop();
+        }
     }
 
     /**
