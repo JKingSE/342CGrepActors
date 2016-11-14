@@ -33,12 +33,20 @@ public class CollectionActor extends UntypedActor{
 
 
     @Override
-    public void onReceive(Object message) throws Throwable {
+    public void onReceive(Object message){
         if(message instanceof FileCount){
-            accept((FileCount) message );       // accepts a filecount object
+            try {
+                accept((FileCount) message );       // accepts a filecount object
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
         }
         else{
-            accept((Found) message);            // accepts a found object
+            try {
+                accept((Found) message);            // accepts a found object
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ public class ScanActor extends UntypedActor{
     }
 
     @Override
-    public void onReceive(Object o) throws Throwable {
+    public void onReceive(Object o){
 
     }
 }
