@@ -9,7 +9,8 @@ public class CollectionActor extends UntypedActor{
     public CollectionActor(){
     }
 
-    public void sendMessage(FileCount fileCount){
+
+    public void accept(FileCount fileCount) throws Throwable {
         if(!hasFileCount){ // this way we can only set the file count once
             this.fileCount = fileCount;
             hasFileCount = true;
@@ -20,10 +21,9 @@ public class CollectionActor extends UntypedActor{
     /***
      * upon receipt, are printed by the CollectionActor. Printout consists of
      * the file name (or "-" for standard input) and the list of matching lines
+     * @param foundObject
      */
-    @Override
-    public void onReceive(Object o) throws Throwable {
-
+    public void accept(Found foundObject) throws Throwable {
         /**
          * When all the Found messages have been processed, the CollectionActor
          * shuts down all actors using Actors.registry().shutdown()
@@ -31,4 +31,14 @@ public class CollectionActor extends UntypedActor{
     }
 
 
+
+    @Override
+    public void onReceive(Object message) throws Throwable {
+        if(message instanceof FileCount){
+            accept((FileCount) message );       // accepts a filecount object
+        }
+        else{
+            accept((Found) message);            // accepts a found object
+        }
+    }
 }
