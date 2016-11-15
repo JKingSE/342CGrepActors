@@ -63,7 +63,7 @@ class ScanActor extends UntypedActor{
             }
             line++;
         }
-
+        reader.close();
         return new Found(filepath,matches);
     }
 
