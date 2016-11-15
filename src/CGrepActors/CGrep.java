@@ -60,28 +60,10 @@ public class CGrep {
         for(String filename : filesToSearch){
 
             ActorRef scanRef = system.actorOf(Props.create(ScanActor.class)); // creates a new ScanActor
-            scanRef.tell(collectionRef,ActorRef.noSender()); // sends reference to collectionRef
-            scanRef.tell(new Configure(filename,pattern), ActorRef.noSender());
+            scanRef.tell(new Configure(filename,pattern,collectionRef), ActorRef.noSender());
 
         }
-//
-//        collectionActorRef = actorOf(CollectionActor.class);
-//        for(int x=0; x<count; x++){
-//            scanActorRef[x] = actorOf(ScanActor.class);
-//        }
-//        collectionActorRef.start();
-//        for(int x=0;x<count;x++){
-//            scanActorRef[x].start();
-//        }
-//
-//        /*
-//        Do Stuff
-//         */
-//
-//        collectionActorRef.stop();
-//        for(int x=0;x<count;x++){
-//            scanActorRef[x].stop();
-//        }
+
     }
 
     /**

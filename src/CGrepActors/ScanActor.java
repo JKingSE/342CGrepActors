@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 public class ScanActor extends UntypedActor{
     //private final Configure message;
     private ActorRef collRef;
-    private boolean hasActorRef = false;
     private boolean hasConfigureMessage = false;
 
 
@@ -31,6 +30,7 @@ public class ScanActor extends UntypedActor{
             // scan file
             String filePath = ((Configure) o).getMessage();
             String pattern = ((Configure) o).getPattern();
+            this.collRef = ((Configure) o).getActorRef();
             try {
 
                 Found results = getMatches(filePath,pattern);  // search files
@@ -39,10 +39,6 @@ public class ScanActor extends UntypedActor{
             }
             catch (Exception e) { e.printStackTrace();    }
             hasConfigureMessage = true;
-        }
-        else if( o instanceof ActorRef && !hasActorRef){ // only want to be able to recieve exactly one ActorRef
-            collRef = (ActorRef)o;
-            hasActorRef = true;
         }
         else{
             System.err.print("unexpected message type: " + o.getClass());
