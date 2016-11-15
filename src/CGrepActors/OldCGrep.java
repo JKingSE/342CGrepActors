@@ -1,4 +1,4 @@
-package com.CGrepActors;
+package CGrepActors;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package com.CGrepActors;
+package CGrepActors;
 
 import java.util.ArrayList;
 import java.util.List;

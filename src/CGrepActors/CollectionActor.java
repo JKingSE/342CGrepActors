@@ -1,7 +1,6 @@
-package com.CGrepActors;
+package CGrepActors;
 
 import akka.actor.ActorRef;
-import akka.actor.Props;
 import akka.actor.UntypedActor;
 
 public class CollectionActor extends UntypedActor{

@@ -1,4 +1,4 @@
-package com.CGrepActors;
+package CGrepActors;
 
 import akka.actor.UntypedActor;
 
