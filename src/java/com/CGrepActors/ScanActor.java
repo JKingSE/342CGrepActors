@@ -1,8 +1,10 @@
 package com.CGrepActors;
 
-import akka.actor.Actor;
 import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.actor.UntypedActor;
+
+import java.util.ArrayList;
 
 /***
  * Each file (or the standard input if no files are given) will be scanned by a ScanActor
@@ -13,16 +15,21 @@ import akka.actor.UntypedActor;
  *
  */
 public class ScanActor extends UntypedActor{
-    private final Configure message;
+    //private final Configure message;
     private final ActorRef ref;
 
-    public ScanActor(Configure message, ActorRef ref){
-        this.message = message;
+    public ScanActor( ActorRef ref){
         this.ref = ref;
     }
 
     @Override
     public void onReceive(Object o){
+        if(o instanceof Configure){
+            // scan file
+        }
+    }
 
+    public static Props createWorker(){
+        return Props.create(ScanActor.class, new ArrayList<Object>(0));
     }
 }

@@ -1,27 +1,21 @@
 package com.CGrepActors;
 
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
- * OldCGrep is the main class that manages the application
- *
- * Created by John King on 27-Oct-16.
+ * Created by John King on 11-Nov-16.
  */
-public class OldCGrep {
+public class CGrep {
 
-    // Thread Pool Size
-    private static final int THREAD_POOL_MAX = 3;
-    private static  ExecutorService executor;
+    static private ActorRef [] scanActorRef;
+    static private ActorRef collectionActorRef;
 
-    public static void main(String[] args) {
+    public static void main(String args[]){
+
 
         int argLength = args.length;
 
@@ -30,25 +24,49 @@ public class OldCGrep {
             System.exit(1);
         }
 
-        executor = Executors.newFixedThreadPool(THREAD_POOL_MAX);
 
         String pattern = args[0];
 
+        FileCount fileCount;
+
+        int count = countFiles(args, false);
+
+        scanActorRef = new ActorRef[count];
 
         if (argLength > 1) { // case where all arguments are passed through program args
-            searchFiles(args,pattern,false);
+            fileCount = new FileCount(  count  );
 
-        } else if (argLength == 1) { // case where the user supplies their own filepath's via keyboard
+        } else{ // case where the user supplies their own filepath's via keyboard
             System.out.print("Please enter filepath(s) separated by spaces: ");
             Scanner sc = new Scanner(System.in);
             String input = sc.nextLine();
             String[] parsed = input.split(" "); // split on all spaces
-            searchFiles(parsed,pattern,true);
+            fileCount = new FileCount(  countFiles(parsed,true) );
         }
 
-        executor.shutdown();
-    }
 
+        ActorSystem system = ActorSystem.create();
+        ActorRef master = system.actorOf(CollectionActor.createMaster());
+
+//
+//        collectionActorRef = actorOf(CollectionActor.class);
+//        for(int x=0; x<count; x++){
+//            scanActorRef[x] = actorOf(ScanActor.class);
+//        }
+//        collectionActorRef.start();
+//        for(int x=0;x<count;x++){
+//            scanActorRef[x].start();
+//        }
+//
+//        /*
+//        Do Stuff
+//         */
+//
+//        collectionActorRef.stop();
+//        for(int x=0;x<count;x++){
+//            scanActorRef[x].stop();
+//        }
+    }
 
     /**
      * Takes an array of filepaths and the pattern to search for, opens the files
@@ -56,37 +74,30 @@ public class OldCGrep {
      * true, then this tells method that the array of filepath's are coming from the
      * keyboard vs from the program arguments when it's false.
      * @param input
-     * @param pattern
      * @param manualInput tells method where the filepath's String away is coming from.
      */
-    public static void searchFiles(String[] input, String pattern, boolean manualInput){
+    public static int countFiles(String[] input, boolean manualInput){
         int length = input.length;
-
+        int count = 0;
         int i = manualInput ? 0 : 1 ; // skips the first element in the array if taking input from program arguments
+
         for(;i<length;i++){
 
             String filepath = input[i];
             File file = new File(filepath);
 
-            if(filepath.isEmpty()){ // ignore empty spaces and skip iteration
-                continue;
-            }
-            else if (file.exists()) {
-                try {
-
-                    Callable<ListOfFound> searcher = new Search(file, pattern);
-                    Future<ListOfFound> result = executor.submit(searcher);
-                    System.out.println(result.get());
-
-                } catch (FileNotFoundException | ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+            if(file.isFile()){
+                count++;
             }
             else{
                 System.err.println("'" + filepath + "'" + " not found");
             }
 
         }
+
+        System.out.println("filecount: " + count);
+
+        return count;
 
     }
 }

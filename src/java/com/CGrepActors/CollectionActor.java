@@ -1,10 +1,13 @@
 package com.CGrepActors;
 
+import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.actor.UntypedActor;
 
 public class CollectionActor extends UntypedActor{
     private FileCount fileCount;
     boolean hasFileCount = false;
+    private ActorRef ref;
 
     public CollectionActor(){
     }
@@ -14,6 +17,8 @@ public class CollectionActor extends UntypedActor{
         if(!hasFileCount){ // this way we can only set the file count once
             this.fileCount = fileCount;
             hasFileCount = true;
+
+            ref = this.getContext().actorOf(ScanActor.createWorker());
         }
     }
 
@@ -30,6 +35,10 @@ public class CollectionActor extends UntypedActor{
          */
     }
 
+
+    public static Props createMaster(){
+        return Props.create(CollectionActor.class, "Collection Actor");
+    }
 
 
     @Override
