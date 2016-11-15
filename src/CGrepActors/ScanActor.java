@@ -4,6 +4,8 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,7 +30,12 @@ public class ScanActor extends UntypedActor{
         if(o instanceof Configure && !hasConfigureMessage){
             // scan file
             String filePath = ((Configure) o).getMessage();
-            //Search search = new Search(filePath);
+            String pattern = ((Configure) o).getPattern();
+            try {
+                Search search = new Search(new File(filePath),pattern);
+                ListOfFound results = search.call();
+            }
+            catch (Exception e) { e.printStackTrace();    }
 
             System.out.println("The message: " + ((Configure) o).getMessage());
             hasConfigureMessage = true;

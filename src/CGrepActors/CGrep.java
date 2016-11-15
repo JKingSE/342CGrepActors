@@ -60,7 +60,7 @@ public class CGrep {
         for(String filename : filesToSearch){
 
             ActorRef scanRef = system.actorOf(Props.create(ScanActor.class)); // creates a new ScanActor
-            scanRef.tell(new Configure(filename), ActorRef.noSender());
+            scanRef.tell(new Configure(filename,pattern), ActorRef.noSender());
             scanRef.tell(collectionRef,ActorRef.noSender()); // sends reference to collectionRef
 
         }
