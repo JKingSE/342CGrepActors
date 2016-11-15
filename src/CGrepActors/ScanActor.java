@@ -17,9 +17,7 @@ import java.util.regex.Pattern;
  * which collects and prints scan results
  *
  */
-public class ScanActor extends UntypedActor{
-    //private final Configure message;
-    private ActorRef collRef;
+class ScanActor extends UntypedActor{
     private boolean hasConfigureMessage = false;
 
 
@@ -30,7 +28,7 @@ public class ScanActor extends UntypedActor{
             // scan file
             String filePath = ((Configure) o).getMessage();
             String pattern = ((Configure) o).getPattern();
-            this.collRef = ((Configure) o).getActorRef();
+            ActorRef collRef = ((Configure) o).getActorRef();
             try {
 
                 Found results = getMatches(filePath,pattern);  // search files
@@ -45,7 +43,7 @@ public class ScanActor extends UntypedActor{
         }
     }
 
-    public Found getMatches(String filepath, String target) throws Exception {
+    private Found getMatches(String filepath, String target) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
         Pattern pattern = Pattern.compile(target);
 

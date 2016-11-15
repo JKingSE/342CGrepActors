@@ -7,7 +7,7 @@ import akka.actor.Props;
 /**
  * Created by nate on 11/14/16.
  */
-public class JavaBotMain {
+class JavaBotMain {
 
     public static void main(String[] args) {
         final ActorSystem system = ActorSystem.create();

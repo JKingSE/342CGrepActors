@@ -11,10 +11,8 @@ import java.util.Scanner;
 /**
  * Created by John King on 11-Nov-16.
  */
-public class CGrep {
+class CGrep {
 
-    static private ActorRef [] scanActorRef;
-    static private ActorRef collectionActorRef;
 
     public static void main(String args[]){
 
@@ -28,14 +26,9 @@ public class CGrep {
             System.exit(1);
         }
 
-
         String pattern = args[0];
-
         FileCount fileCount;
-
         int count = countFiles(args, false);
-
-        scanActorRef = new ActorRef[count];
 
         String[] filesToSearch;
 
@@ -74,7 +67,7 @@ public class CGrep {
      * @param input
      * @param manualInput tells method where the filepath's String away is coming from.
      */
-    public static int countFiles(String[] input, boolean manualInput){
+    private static int countFiles(String[] input, boolean manualInput){
         int length = input.length;
         int count = 0;
         int i = manualInput ? 0 : 1 ; // skips the first element in the array if taking input from program arguments

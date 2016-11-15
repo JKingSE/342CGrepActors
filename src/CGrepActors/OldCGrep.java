@@ -14,7 +14,7 @@ import java.util.concurrent.Future;
  *
  * Created by John King on 27-Oct-16.
  */
-public class OldCGrep {
+class OldCGrep {
 
     // Thread Pool Size
     private static final int THREAD_POOL_MAX = 3;
@@ -58,7 +58,7 @@ public class OldCGrep {
      * @param pattern
      * @param manualInput tells method where the filepath's String away is coming from.
      */
-    public static void searchFiles(String[] input, String pattern, boolean manualInput){
+    private static void searchFiles(String[] input, String pattern, boolean manualInput){
         int length = input.length;
 
         int i = manualInput ? 0 : 1 ; // skips the first element in the array if taking input from program arguments

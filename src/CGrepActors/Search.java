@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 
 /**Search searches the input stream for a given pattern
  * Created by John King on 27-Oct-16. */
-public class Search implements Callable<ListOfFound> {
+class Search implements Callable<ListOfFound> {
     // The Found object to store search results
     private final ListOfFound results;
     // Input stream
