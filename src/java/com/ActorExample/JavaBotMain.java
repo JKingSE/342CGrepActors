@@ -1,4 +1,4 @@
-package ActorExample;
+package java.com.ActorExample;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;

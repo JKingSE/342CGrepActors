@@ -1,4 +1,4 @@
-package com.CGrepActors;
+package java.com.CGrepActors;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;

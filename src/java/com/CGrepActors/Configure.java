@@ -1,4 +1,4 @@
-package com.CGrepActors;
+package java.com.CGrepActors;
 
 /**
  * created with a message containing (a) a String with the name of the file
