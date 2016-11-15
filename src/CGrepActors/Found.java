@@ -19,4 +19,12 @@ public class Found {
         this.filename= filename;
         this.matches = matches;
     }
+
+    public String getFilename(){
+        return filename;
+    }
+
+    public List<String> getMatches(){
+        return matches;
+    }
 }

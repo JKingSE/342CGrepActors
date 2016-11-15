@@ -21,6 +21,8 @@ public class CGrep {
 
         int argLength = args.length;
 
+        ActorSystem system = ActorSystem.create();
+
         if(argLength == 0){
             System.err.println("Missing Search Pattern"); // exit program if no search patter is given
             System.exit(1);
@@ -38,7 +40,7 @@ public class CGrep {
         String[] filesToSearch;
 
         if (argLength > 1) { // case where all arguments are passed through program args
-            fileCount = new FileCount(  count  );
+            fileCount = new FileCount(count, system);
             filesToSearch = Arrays.copyOfRange(args,1, args.length); // copies just the filenames
 
         } else{ // case where the user supplies their own filepath's via keyboard
@@ -46,12 +48,10 @@ public class CGrep {
             Scanner sc = new Scanner(System.in);
             String input = sc.nextLine();
             String[] parsed = input.split(" "); // split on all spaces
-            fileCount = new FileCount(  countFiles(parsed,true) );
+            fileCount = new FileCount(countFiles(parsed,true), system);
             filesToSearch = parsed;
         }
 
-
-        ActorSystem system = ActorSystem.create();
 
         ActorRef collectionRef = system.actorOf(Props.create(CollectionActor.class));
         collectionRef.tell(fileCount,ActorRef.noSender()); // send filecount object to collectionRef
@@ -64,9 +64,6 @@ public class CGrep {
             scanRef.tell(collectionRef,ActorRef.noSender()); // sends reference to collectionRef
 
         }
-
-
-        system.shutdown();
 //
 //        collectionActorRef = actorOf(CollectionActor.class);
 //        for(int x=0; x<count; x++){
