@@ -1,13 +1,13 @@
 package CGrepActors;
 
 import akka.actor.ActorRef;
-import akka.actor.Props;
 import akka.actor.UntypedActor;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /***
  * Each file (or the standard input if no files are given) will be scanned by a ScanActor
@@ -19,7 +19,7 @@ import java.util.Scanner;
  */
 public class ScanActor extends UntypedActor{
     //private final Configure message;
-    private ActorRef ref;
+    private ActorRef collRef;
     private boolean hasActorRef = false;
     private boolean hasConfigureMessage = false;
 
@@ -32,8 +32,10 @@ public class ScanActor extends UntypedActor{
             String filePath = ((Configure) o).getMessage();
             String pattern = ((Configure) o).getPattern();
             try {
-                Search search = new Search(new File(filePath),pattern);
-                ListOfFound results = search.call();
+
+                Found results = getMatches(filePath,pattern);  // search files
+                collRef.tell(results,this.self());  // send found object to collection ref
+
             }
             catch (Exception e) { e.printStackTrace();    }
 
@@ -41,12 +43,36 @@ public class ScanActor extends UntypedActor{
             hasConfigureMessage = true;
         }
         else if( o instanceof ActorRef && !hasActorRef){ // only want to be able to recieve exactly one ActorRef
-            ref = (ActorRef)o;
+            collRef = (ActorRef)o;
             hasActorRef = true;
         }
         else{
             System.err.print("unexpected message type: " + o.getClass());
         }
+    }
+
+    public Found getMatches(String filepath, String target) throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(filepath));
+        Pattern pattern = Pattern.compile(target);
+
+        // Matching lines
+        List<String> matches = new ArrayList<String>();
+
+        // The current line
+        String currentLine;
+
+        // The current line number
+        long line = 0;
+
+        while ((currentLine = reader.readLine()) != null) {
+            Matcher matcher = pattern.matcher(currentLine);
+            if (matcher.find()) {
+                matches.add(line + " " + currentLine);
+            }
+            line++;
+        }
+
+        return new Found(filepath,matches);
     }
 
 }
