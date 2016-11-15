@@ -8,9 +8,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**
- * Created by John King on 11-Nov-16.
- */
 class CGrep {
 
 
@@ -59,7 +56,7 @@ class CGrep {
 
     }
 
-    /**
+    /***
      * Takes an array of filepaths and the pattern to search for, opens the files
      * and performs the "Main" loop of execution for our program. if manualInput is
      * true, then this tells method that the array of filepath's are coming from the

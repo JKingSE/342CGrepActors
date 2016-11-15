@@ -23,7 +23,7 @@ class CollectionActor extends UntypedActor{
         }
     }
 
-    /***
+    /**
      * upon receipt, are printed by the CollectionActor. Printout consists of
      * the file name (or "-" for standard input) and the list of matching lines
      * @param foundObject

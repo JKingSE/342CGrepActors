@@ -2,7 +2,7 @@ package CGrepActors;
 
 import akka.actor.ActorRef;
 
-/**
+/***
  * created with a message containing (a) a String with the name of the file
  * to scan (or null for the standard input)
  */
