@@ -1,4 +1,4 @@
-package java.com.CGrepActors;
+package com.CGrepActors;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
@@ -16,16 +16,18 @@ import java.util.ArrayList;
  */
 public class ScanActor extends UntypedActor{
     //private final Configure message;
-    private final ActorRef ref;
+    private final ActorRef ref = null;
 
-    public ScanActor( ActorRef ref){
-        this.ref = ref;
+    public ScanActor( ){
+
     }
 
     @Override
     public void onReceive(Object o){
         if(o instanceof Configure){
             // scan file
+
+            System.out.println("The message: " + ((Configure) o).getMessage());
         }
     }
 

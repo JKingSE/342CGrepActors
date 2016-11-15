@@ -1,4 +1,4 @@
-package java.com.CGrepActors;
+package com.CGrepActors;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
@@ -35,10 +35,6 @@ public class CollectionActor extends UntypedActor{
          */
     }
 
-
-    public static Props createMaster(){
-        return Props.create(CollectionActor.class, "Collection Actor");
-    }
 
 
     @Override

@@ -1,9 +1,11 @@
-package java.com.CGrepActors;
+package com.CGrepActors;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -33,8 +35,11 @@ public class CGrep {
 
         scanActorRef = new ActorRef[count];
 
+        String[] filesToSearch;
+
         if (argLength > 1) { // case where all arguments are passed through program args
             fileCount = new FileCount(  count  );
+            filesToSearch = Arrays.copyOfRange(args,1, args.length); // copies just the filenames
 
         } else{ // case where the user supplies their own filepath's via keyboard
             System.out.print("Please enter filepath(s) separated by spaces: ");
@@ -42,12 +47,20 @@ public class CGrep {
             String input = sc.nextLine();
             String[] parsed = input.split(" "); // split on all spaces
             fileCount = new FileCount(  countFiles(parsed,true) );
+            filesToSearch = parsed;
         }
 
 
         ActorSystem system = ActorSystem.create();
-        ActorRef master = system.actorOf(CollectionActor.createMaster());
+        ActorRef collectionRef = system.actorOf(Props.create(CollectionActor.class));
+        ActorRef scanRef = system.actorOf(Props.create(ScanActor.class));
 
+        for(String filename : filesToSearch){
+            scanRef.tell(new Configure(filename), ActorRef.noSender());
+
+        }
+
+        system.shutdown();
 //
 //        collectionActorRef = actorOf(CollectionActor.class);
 //        for(int x=0; x<count; x++){

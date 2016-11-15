@@ -1,4 +1,4 @@
-package java.com.ActorExample;
+package com.ActorExample;
 
 import akka.actor.UntypedActor;
 

@@ -1,4 +1,4 @@
-package java.com.ActorExample;
+package com.ActorExample;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -20,6 +20,7 @@ public class JavaBotMain {
         akkaBot.tell(new JavaAkkaBot.Move(JavaAkkaBot.Direction.RIGHT), ActorRef.noSender());
 
         akkaBot.tell(new JavaAkkaBot.Stop(), ActorRef.noSender());
+
 
         system.shutdown();
     }
