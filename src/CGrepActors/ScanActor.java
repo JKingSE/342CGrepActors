@@ -38,8 +38,6 @@ public class ScanActor extends UntypedActor{
 
             }
             catch (Exception e) { e.printStackTrace();    }
-
-            System.out.println("The message: " + ((Configure) o).getMessage());
             hasConfigureMessage = true;
         }
         else if( o instanceof ActorRef && !hasActorRef){ // only want to be able to recieve exactly one ActorRef
