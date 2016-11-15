@@ -52,13 +52,19 @@ public class CGrep {
 
 
         ActorSystem system = ActorSystem.create();
+
         ActorRef collectionRef = system.actorOf(Props.create(CollectionActor.class));
-        ActorRef scanRef = system.actorOf(Props.create(ScanActor.class));
+        collectionRef.tell(fileCount,ActorRef.noSender()); // send filecount object to collectionRef
+
 
         for(String filename : filesToSearch){
+
+            ActorRef scanRef = system.actorOf(Props.create(ScanActor.class)); // creates a new ScanActor
             scanRef.tell(new Configure(filename), ActorRef.noSender());
+            scanRef.tell(collectionRef,ActorRef.noSender()); // sends reference to collectionRef
 
         }
+
 
         system.shutdown();
 //

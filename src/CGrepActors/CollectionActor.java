@@ -16,8 +16,6 @@ public class CollectionActor extends UntypedActor{
         if(!hasFileCount){ // this way we can only set the file count once
             this.fileCount = fileCount;
             hasFileCount = true;
-
-            ref = this.getContext().actorOf(ScanActor.createWorker());
         }
     }
 

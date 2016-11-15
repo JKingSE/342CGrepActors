@@ -5,6 +5,7 @@ import akka.actor.Props;
 import akka.actor.UntypedActor;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /***
  * Each file (or the standard input if no files are given) will be scanned by a ScanActor
@@ -16,22 +17,29 @@ import java.util.ArrayList;
  */
 public class ScanActor extends UntypedActor{
     //private final Configure message;
-    private final ActorRef ref = null;
+    private ActorRef ref;
+    private boolean hasActorRef = false;
+    private boolean hasConfigureMessage = false;
 
-    public ScanActor( ){
 
-    }
 
     @Override
     public void onReceive(Object o){
-        if(o instanceof Configure){
+        if(o instanceof Configure && !hasConfigureMessage){
             // scan file
+            String filePath = ((Configure) o).getMessage();
+            //Search search = new Search(filePath);
 
             System.out.println("The message: " + ((Configure) o).getMessage());
+            hasConfigureMessage = true;
+        }
+        else if( o instanceof ActorRef && !hasActorRef){ // only want to be able to recieve exactly one ActorRef
+            ref = (ActorRef)o;
+            hasActorRef = true;
+        }
+        else{
+            System.err.print("unexpected message type: " + o.getClass());
         }
     }
 
-    public static Props createWorker(){
-        return Props.create(ScanActor.class, new ArrayList<Object>(0));
-    }
 }
